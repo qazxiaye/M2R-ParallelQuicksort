@@ -241,7 +241,7 @@ graphs generated with java
 original data got from g5k
 
 *** analysis
-[[file:analysis.pdf][analysis.pdf]
+[[file:analysis.pdf][analysis.pdf]]
 
 
 
