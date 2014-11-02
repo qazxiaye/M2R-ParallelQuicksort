@@ -1,0 +1,43 @@
+ size : 100
+host1core1 para average : 0.0089868
+host1core2 para average : 0.0134968
+host4core1 para average : 0.0081727
+host4core2 para average : 0.0094407
+host10core1 para average : 0.0080471
+host10core2 para average : 0.014098100000000002
+
+
+ size : 1000
+host1core1 para average : 0.0386717
+host1core2 para average : 0.058543
+host4core1 para average : 0.0456303
+host4core2 para average : 0.055259899999999994
+host10core1 para average : 0.046554
+host10core2 para average : 0.0701014
+
+
+ size : 10000
+host1core1 para average : 0.0609802
+host1core2 para average : 0.09563569999999999
+host4core1 para average : 0.08323289999999998
+host4core2 para average : 0.098415
+host10core1 para average : 0.08111160000000002
+host10core2 para average : 0.1090425
+
+
+ size : 100000
+host1core1 para average : 0.13425800000000002
+host1core2 para average : 0.1561003
+host4core1 para average : 0.1507127
+host4core2 para average : 0.1581778
+host10core1 para average : 0.14984
+host10core2 para average : 0.17169629999999997
+
+
+ size : 1000000
+host1core1 para average : 0.6354127999999999
+host1core2 para average : 0.460987
+host4core1 para average : 0.6433924
+host4core2 para average : 0.471392
+host10core1 para average : 0.6411336
+host10core2 para average : 0.4648397
