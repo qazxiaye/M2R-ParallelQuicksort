@@ -241,7 +241,7 @@ graphs generated with java
 original data got from g5k
 
 *** analysis
-[[file:data/ubuntu_2014-11-02/distribution/getData.tcl][data/ubuntu_2014-11-02/distribution/getData.tcl]
+[[file:analysis.pdf][analysis.pdf]
 
 
 
