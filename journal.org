@@ -244,4 +244,140 @@ original data got from g5k
 [[file:analysis.pdf][analysis.pdf]]
 
 
+** 07/12/2014
+*** Environement
+**** Host
+***** CPU
+processor	: 0
+model name	: Intel(R) Core(TM) i5-3210M CPU @ 2.50GHz
+siblings	: 4
+cpu cores	: 2
+
+***** Cache
+L1d cache:             32K
+L1i cache:             32K
+L2 cache:              256K
+L3 cache:              3072K
+
+***** RAM
+#+begin_src sh :results output :exports both 
+    cat /proc/meminfo
+#+end_src
+
+#+results:
+#+begin_example
+MemTotal:        3951816 kB
+MemFree:          174548 kB
+Buffers:          889516 kB
+Cached:          1563412 kB
+SwapCached:            0 kB
+Active:          1815368 kB
+Inactive:        1760508 kB
+Active(anon):     936180 kB
+Inactive(anon):   500508 kB
+Active(file):     879188 kB
+Inactive(file):  1260000 kB
+Unevictable:        1300 kB
+Mlocked:              16 kB
+SwapTotal:        262140 kB
+SwapFree:         262140 kB
+Dirty:               132 kB
+Writeback:             0 kB
+AnonPages:       1124248 kB
+Mapped:           190252 kB
+Shmem:            312464 kB
+Slab:             110396 kB
+SReclaimable:      79224 kB
+SUnreclaim:        31172 kB
+KernelStack:        3696 kB
+PageTables:        30044 kB
+NFS_Unstable:          0 kB
+Bounce:                0 kB
+WritebackTmp:          0 kB
+CommitLimit:     2238048 kB
+Committed_AS:    3555328 kB
+VmallocTotal:   34359738367 kB
+VmallocUsed:      444420 kB
+VmallocChunk:   34359290460 kB
+HardwareCorrupted:     0 kB
+AnonHugePages:         0 kB
+HugePages_Total:       0
+HugePages_Free:        0
+HugePages_Rsvd:        0
+HugePages_Surp:        0
+Hugepagesize:       2048 kB
+DirectMap4k:       95404 kB
+DirectMap2M:     4003840 kB
+#+end_example
+
+**** OS
+Kernel Version :
+#+begin_src sh :results output :exports both 
+    uname -r
+#+end_src
+
+#+results:
+: 3.11.0-15-generic
+
+**** Compiler
+#+begin_src sh :results output :exports both 
+    gcc --version
+#+end_src
+
+#+results:
+: gcc (Ubuntu/Linaro 4.6.3-1ubuntu5) 4.6.3
+: Copyright (C) 2011 Free Software Foundation, Inc.
+: This is free software; see the source for copying conditions.  There is NO
+: warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+*** Random Ordered Experiment
+I have done a Random Ordered Experiment for n={10,100,1000,10000,100000} to get the distribution of the execution time on my computer. But I still get 2 peaks as the following figure.
+
+[[file:data/ubuntu_2014-12-07/distribution_ran_order/png/10000_seq.png]]
+[[file:data/ubuntu_2014-12-07/distribution_ran_order/png/10000_para.png]]
+[[file:data/ubuntu_2014-12-07/distribution_ran_order/png/10000_libc.png]]
+
+It's obvious they don't follow the normal distribution. In the following analysis, I will compare the Confidence Interval and average value.
+
+*** time vs n
+[[file:data/ubuntu_2014-12-07/distribution_ran_order/time_vs_n.png]]
+
+As in the graph, the gray part shows the confidence interval, the line shows the average value. Obviously, we don't get a good performance with the parallel execution.
+
+*** gcc option
+**** O2
+When I modify gcc option from -O0 to -O2, for the same experiment, I get the following result.
+
+[[file:data/ubuntu_2014-12-07/distribution_ran_order/time_vs_n.png]]
+
+There's no real difference found compared with the previous one. But for "seq" and "libc", at size 100000, we get a better performance than the previous version.
+
+**** O3
+[[file:data/ubuntu_2014-12-07/distribution_ran_order/time_vs_n.png]]
+
+Similar result with O3, parallel performance is even worse. 
+
+*** thread level
+It seems to be too many threads created, I modified the source code, assign a smaller value to top thread level.
+**** tlevel 5
+When top thread level is 5, I get the following result:
+
+[[file:data/ubuntu_2014-12-07/tlevel5/time_vs_n.png]]
+
+In this case, the confidence interval of each line is quite narrow. we cannot see it in this graph. The performance is much better.
+
+**** time vs p
+For other value of tlevel the results are as the following :
+
+tlevel = 3
+[[file:data/ubuntu_2014-12-07/tlevel3/time_vs_n.png]]
+Compared with the result when tlevel = 5, when n is smaller, we get a good performance in this case with less cost of merge and thread manage.
+
+
+tlevel = 0
+[[file:data/ubuntu_2014-12-07/tlevel0/time_vs_n.png]]
+When tlevel = 0, there will be only one thread for parallel execution. With the cost of thread manage, it's quite usual that it performes worse than the sequencial versions.
+
+
+TODO : time vs p, speedup, efficiency
 
