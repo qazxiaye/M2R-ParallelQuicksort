@@ -50,7 +50,7 @@ while (i < 3) {
 }
 
 g_range <- range(0,point,upper,lower)
-legend(1, g_range[2], c("seq","para","libc"), cex=1.5,
+legend("topleft", c("seq","para","libc"), cex=1.5,
    col=colors,lty = c(1, 1, 1));
 axis(1, at=1:5, lab=c("10","100","1000","10e3","10e4"))
 axis(2, las=1)
